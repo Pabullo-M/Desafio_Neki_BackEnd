@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.desafio.neki.dto.LoginResponseDto;
 import com.desafio.neki.dto.UsuarioDto;
 import com.desafio.neki.service.UsuarioService;
 
@@ -26,7 +27,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity loginUsuario (@RequestBody @Valid UsuarioDto data) {
+	public ResponseEntity<LoginResponseDto> loginUsuario (@RequestBody @Valid UsuarioDto data) {
 		
 		return service.loginUsuario(data);
 	}

@@ -10,6 +10,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.desafio.neki.dto.LoginResponseDto;
 import com.desafio.neki.model.Usuario;
 
 
@@ -18,7 +19,7 @@ public class TokenService {
 		
 String secret = "a";
 
-public String geracaoToken(Usuario usuario) {
+public LoginResponseDto geracaoToken(Usuario usuario) {
 
 		
 		try {
@@ -30,7 +31,8 @@ public String geracaoToken(Usuario usuario) {
 					.withExpiresAt(geracaoDeDataExpiracao())
 					.sign(algorithm);
 					//caso precise expirar o token adc o .withExpiredAt()
-			return token;
+			LoginResponseDto login = new LoginResponseDto(token, usuario.getId());
+			return login;
 		} catch (JWTCreationException e) {
 			throw new RuntimeException("Erro na geração do token", e);
 		}
