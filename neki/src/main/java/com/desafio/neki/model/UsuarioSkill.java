@@ -18,7 +18,7 @@ public class UsuarioSkill {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "skill_id")
+    @JoinColumn(name = "skill_id", unique = true)
     @JsonIgnore
     private Skills skill;
 

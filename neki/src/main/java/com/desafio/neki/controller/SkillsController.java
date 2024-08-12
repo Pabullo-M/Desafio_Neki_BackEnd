@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.desafio.neki.model.Skills;
 import com.desafio.neki.service.SkillsService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/skills")
 public class SkillsController {
@@ -20,6 +22,7 @@ public class SkillsController {
 	
 	
 	@GetMapping
+	@SecurityRequirement(name = "bearer-jwt")
 	public ResponseEntity<List<Skills>> getAll(){
 		return ResponseEntity.ok(service.getAllSkills());
 	}

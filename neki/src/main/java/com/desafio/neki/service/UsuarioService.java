@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import com.desafio.neki.dto.UsuarioDto;
 import com.desafio.neki.model.Usuario;
 import com.desafio.neki.repository.UsuarioRepository;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Service
@@ -29,15 +31,20 @@ public class UsuarioService {
 	@Autowired
 	TokenService tokenService;
 	
-	public ResponseEntity cadastroUsuario (UsuarioDto data) {
-
+	@Transactional
+	public ResponseEntity cadastroUsuario (@Valid UsuarioDto data) {
+		UserDetails user = repository.findByUsuario(data.usuario());
+		if(user!= null) {
+			return ResponseEntity.badRequest().body("Nome de usuario já está em uso");
+		}else { 
+		
 		String senhaEncryp = new BCryptPasswordEncoder().encode(data.senha());
 		Usuario usuario =  data.toEntity(data);
 		usuario.setSenha(senhaEncryp);
 		repository.save(usuario);
 		
 		return ResponseEntity.ok("Cadastro de usuario realizado com sucesso!!");
-		
+		}
 	}
 	public ResponseEntity<LoginResponseDto> loginUsuario(@RequestBody @Valid UsuarioDto data) {
 	    try {

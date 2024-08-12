@@ -12,7 +12,7 @@ import com.desafio.neki.model.UsuarioSkill;
 
 public interface UsuarioSkillRepository extends JpaRepository<UsuarioSkill, Long> {
 
-	@Query(value = "SELECT us.id AS usuario_skill_id, us.level AS usuario_skill_level, s.id AS skill_id, s.nome AS skill_name, s.descricao AS skill_description " +
+	@Query(value = "SELECT us.id AS usuarioSkillId, us.level AS usuarioSkillLevel, s.id AS skillId, s.nome AS skillNome, s.descricao AS skillDescricao, s.img_url AS imgUrl " +
             "FROM usuario_skill us JOIN skills s ON us.skill_id = s.id WHERE us.usuario_id = :usuarioId", 
     nativeQuery = true)
 List<Map<String, Object>> findAllByUsuarioId(@Param("usuarioId") Long usuarioId);

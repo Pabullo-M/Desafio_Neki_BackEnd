@@ -26,23 +26,30 @@ public class SecurityFilter extends OncePerRequestFilter {
 	@Autowired
 	UsuarioRepository repository;
 	
-	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 	        throws ServletException, IOException {
 	    String token = recuperarToken(request);
 	    
 	    if (token != null) {
+	        try {
 	            String user = tokenService.validacaoToken(token); 
 	            UserDetails usuario = repository.findByUsuario(user);
 	            if (usuario != null) {
 	                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
 	                SecurityContextHolder.getContext().setAuthentication(authentication);
+	                System.out.println("Usuário autenticado: " + usuario.getUsername()); 
+	            } else {
+	                System.out.println("Usuário não encontrado com o token."); 
 	            }
+	        } catch (Exception e) {
+	            System.out.println("Erro na validação do token: " + e.getMessage()); 
+	        }
+	    } else {
+	        System.out.println("Token não encontrado.");
 	    }
 	    
 	    filterChain.doFilter(request, response);
 	}
-
 	private String recuperarToken(HttpServletRequest request) {
 	    String authHeader = request.getHeader("Authorization");
 	    if (authHeader != null && authHeader.startsWith("Bearer ")) {

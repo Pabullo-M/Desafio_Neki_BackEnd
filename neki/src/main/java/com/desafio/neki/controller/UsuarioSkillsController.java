@@ -19,6 +19,8 @@ import com.desafio.neki.dto.ResponseSkills;
 import com.desafio.neki.model.UsuarioSkill;
 import com.desafio.neki.service.UsuarioSkillService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 
 @RestController
 @RequestMapping("/usuarioSkill")
@@ -28,11 +30,13 @@ public class UsuarioSkillsController {
 	UsuarioSkillService service;
 	
 	@GetMapping("/{usuarioId}")
+	@SecurityRequirement(name = "bearer-jwt")
     public ResponseEntity<List<Map<String, Object>>> getAllSkills(@PathVariable Long usuarioId) {
         return ResponseEntity.ok(service.getAllSkills(usuarioId));
     }
 	
 	 @PostMapping("/add")
+	 @SecurityRequirement(name = "bearer-jwt")
 	    public ResponseEntity<ResponseSkills> addSkillToUser(@RequestBody AddSkillsDto data) {
 		 System.out.println(data);
 	        if (data == null) {
@@ -41,12 +45,14 @@ public class UsuarioSkillsController {
 	        return ResponseEntity.ok(service.saveUsuarioSkill(data));
 	    }
 	 @PutMapping("/{id}")
+	 @SecurityRequirement(name = "bearer-jwt")
 	    public ResponseEntity<UsuarioSkill> updateLevelUsuarioSkill(@PathVariable Long id, @RequestBody Long novoLevel) {
 	        UsuarioSkill updatedUsuarioSkill = service.updateUsuarioSkill(id, novoLevel);
 	        return ResponseEntity.ok(updatedUsuarioSkill);
 	    }
 	 
 	 @DeleteMapping("/{id}")
+	 @SecurityRequirement(name = "bearer-jwt")
 	 public ResponseEntity<String> deleteSkill(@PathVariable Long id) {
 		 service.deleteSkill(id);
 		 return ResponseEntity.ok("Skill deletada com sucesso");
