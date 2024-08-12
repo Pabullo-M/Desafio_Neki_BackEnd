@@ -7,6 +7,8 @@ Java 17, SpringBoot
 - Clone o repositório.
 - Abra o projeto na sua IDE da sua preferencia.
 - Altere o application.properties com as informações do postgres da maquina local ou servidor em que irá startar a aplicação.
+- Rode os comandos SQL no arquivo SistemaSkill.sql.
+  Obs: Instruções dos comandos estão dentro do arquivo SistemaSkill.sql. 
 - Inicie a aplicação como "Spring Boot App" ou de acordo com o seu servidor.
 
 ### Endpoints
