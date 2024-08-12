@@ -1,5 +1,6 @@
 -- Executar primeiro o Create Database, após entrar no QueryTool da database desafioNeki 
 -- e executar o comando dentro do "Begin".
+-- Comandos utilizados no Postgres, caso utilize outro banco de dados verificar alterações necessárias!
 	
 CREATE DATABASE "desafioNeki"
     WITH
